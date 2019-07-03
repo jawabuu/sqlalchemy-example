@@ -1,0 +1,22 @@
+{
+  "sharded": true,
+  "vindexes": {
+    "hash": {
+      "type": "unicode_loose_md5"
+    }
+  },
+  "tables": {
+     "car":  {
+       "column_vindexes": [
+          {
+              "column": "make",
+              "name": "hash"
+          }
+       ],
+       "auto_increment": {
+	   "column": "id",
+	   "sequence": "car_seq"
+       }	 
+     }      
+  }
+}

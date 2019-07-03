@@ -1,0 +1,38 @@
+---
+apiVersion: "planetscale.com/v1alpha1"
+kind: "PsCluster"
+metadata:
+  name: "example"
+spec:
+  monitored: true
+  proxy:
+    enabled: true
+    authenticate: false
+    image: "registry.planetscale.com/vitess/proxy:latest"
+  cells:
+  - name: "uswest"
+    useGlobalLockserver: true
+    gateway:
+      count: 2
+    vtctld:
+      count: 1
+    keyspaces:
+    - name: "lookup"
+      shards:
+      - range: "-"
+        replicas:
+          - type: "replica"
+    - name: "inventory"
+      shards:
+      - range: "-40"
+        replicas:
+        - type: "replica"        
+      - range: "40-80"
+        replicas:
+        - type: "replica"
+      - range: "80-c0"
+        replicas:
+        - type: "replica"
+      - range: "c0-"
+        replicas:
+        - type: "replica"
